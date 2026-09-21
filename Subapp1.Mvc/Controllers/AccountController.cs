@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +9,7 @@ namespace Subapp1.Mvc.Controllers;
 
 public class AccountController : Controller
 {
+    [AllowAnonymous]
     [HttpGet]
     public IActionResult Login()
     {
@@ -19,6 +21,7 @@ public class AccountController : Controller
         return View(new LoginViewModel());
     }
 
+    [AllowAnonymous]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Login(LoginViewModel viewModel)

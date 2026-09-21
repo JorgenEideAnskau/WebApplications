@@ -64,6 +64,11 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Account}/{action=Login}/{id?}");
+    pattern: "{controller=Challenges}/{action=Index}/{id?}");
+
+app.MapGet("/", (HttpContext context) =>
+    context.User.Identity?.IsAuthenticated == true
+        ? Results.Redirect("/Challenges/Index")
+        : Results.Redirect("/Account/Login"));
 
 app.Run();
