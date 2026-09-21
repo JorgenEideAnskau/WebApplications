@@ -1,0 +1,23 @@
+@model IReadOnlyList<Subapp1.Mvc.Entities.Submission>
+@{
+    ViewData["Title"] = "Submission History";
+}
+
+<h2 class="mt-4">Submission History</h2>
+<table class="table table-striped mt-3">
+    <thead>
+    <tr><th>Student</th><th>ChallengeId</th><th>Answer</th><th>Points</th><th>Date</th></tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.StudentName</td>
+            <td>@item.ChallengeId</td>
+            <td>@item.Answer</td>
+            <td>@item.AwardedPoints</td>
+            <td>@item.SubmittedAtUtc.ToLocalTime()</td>
+        </tr>
+    }
+    </tbody>
+</table>

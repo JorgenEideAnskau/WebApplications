@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="Subapp1.Mvc.Tests/Subapp1.Mvc.Tests.csproj" />
+  <Project Path="Subapp1.Mvc/Subapp1.Mvc.csproj" />
+  <Project Path="Subapp2.Api/Subapp2.Api.csproj" />
+</Solution>

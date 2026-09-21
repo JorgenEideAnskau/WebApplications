@@ -1,0 +1,28 @@
+@model Subapp1.Mvc.ViewModels.SubmissionCreateViewModel
+@{
+    ViewData["Title"] = "Submit Answer";
+}
+
+<h2 class="mt-4">Submit answer for @Model.ChallengeTitle</h2>
+<form asp-action="Create" method="post" class="row g-3">
+    <input asp-for="ChallengeId" type="hidden" />
+    <input asp-for="ChallengeTitle" type="hidden" />
+    <div class="col-md-6">
+        <label asp-for="StudentName" class="form-label"></label>
+        <input asp-for="StudentName" class="form-control" />
+        <span asp-validation-for="StudentName" class="text-danger"></span>
+    </div>
+    <div class="col-12">
+        <label asp-for="Answer" class="form-label"></label>
+        <textarea asp-for="Answer" class="form-control"></textarea>
+        <span asp-validation-for="Answer" class="text-danger"></span>
+    </div>
+    <div class="col-12">
+        <button class="btn btn-primary">Submit</button>
+        <a asp-controller="Challenges" asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

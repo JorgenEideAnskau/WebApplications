@@ -1,0 +1,82 @@
+@model Subapp1.Mvc.ViewModels.ChallengeFilterViewModel
+@{
+    ViewData["Title"] = "Challenges";
+}
+
+<div class="mt-4">
+    <h2>Challenges</h2>
+    <p class="text-muted">Search and filter challenge content by course, topic, and publication status.</p>
+</div>
+
+@if (TempData["SubmissionMessage"] is string message)
+{
+    <div class="alert alert-@(TempData["SubmissionType"] ?? "info")">@message</div>
+}
+
+<form method="get" class="row g-2 align-items-end mb-3">
+    <div class="col-md-3">
+        <label class="form-label">Search</label>
+        <input asp-for="Search" class="form-control" />
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">Course</label>
+        <select asp-for="CourseId" asp-items="Model.Courses" class="form-select">
+            <option value="">All courses</option>
+        </select>
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">Tag</label>
+        <select asp-for="TagId" asp-items="Model.Tags" class="form-select">
+            <option value="">All tags</option>
+        </select>
+    </div>
+    <div class="col-md-2">
+        <div class="form-check">
+            <input asp-for="OnlyPublished" class="form-check-input" />
+            <label asp-for="OnlyPublished" class="form-check-label">Published only</label>
+        </div>
+    </div>
+    <div class="col-md-1">
+        <button class="btn btn-primary w-100">Go</button>
+    </div>
+</form>
+
+<div class="d-flex justify-content-between align-items-center mb-2">
+    <span class="badge text-bg-secondary">@Model.Challenges.Count result(s)</span>
+    <a asp-action="Edit" class="btn btn-success">New challenge</a>
+</div>
+
+<table class="table table-hover">
+    <thead>
+    <tr><th>Challenge</th><th>Course</th><th>Tags</th><th>Status</th><th></th></tr>
+    </thead>
+    <tbody>
+    @foreach (var challenge in Model.Challenges)
+    {
+        <tr>
+            <td>
+                <strong>@challenge.Title</strong>
+                <div class="small text-muted">@challenge.Prompt</div>
+            </td>
+            <td>@challenge.Course?.Title</td>
+            <td>@string.Join(", ", challenge.ChallengeTags.Select(ct => ct.Tag?.Name))</td>
+            <td>
+                <span class="badge text-bg-@(challenge.IsPublished ? "success" : "warning")">
+                    @(challenge.IsPublished ? "Published" : "Draft")
+                </span>
+            </td>
+            <td class="text-end">
+                @if (challenge.IsPublished)
+                {
+                    <a asp-controller="Submissions" asp-action="Create" asp-route-challengeId="@challenge.Id" class="btn btn-sm btn-outline-success">Submit</a>
+                }
+                <a asp-action="Edit" asp-route-id="@challenge.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                <form asp-action="Delete" method="post" class="d-inline">
+                    <input type="hidden" name="id" value="@challenge.Id" />
+                    <button class="btn btn-sm btn-outline-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
