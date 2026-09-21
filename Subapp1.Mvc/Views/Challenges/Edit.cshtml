@@ -1,0 +1,59 @@
+@model Subapp1.Mvc.ViewModels.ChallengeEditViewModel
+@{
+    ViewData["Title"] = Model.Id == 0 ? "Create Challenge" : "Edit Challenge";
+    var courses = (IEnumerable<SelectListItem>)ViewBag.Courses;
+    var tags = (IEnumerable<SelectListItem>)ViewBag.Tags;
+}
+
+@using Microsoft.AspNetCore.Mvc.Rendering
+
+<h2 class="mt-4">@ViewData["Title"]</h2>
+<form asp-action="Edit" method="post" class="row g-3">
+    <input asp-for="Id" type="hidden" />
+    <div class="col-md-6">
+        <label asp-for="Title" class="form-label"></label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="CourseId" class="form-label">Course</label>
+        <select asp-for="CourseId" asp-items="courses" class="form-select"></select>
+        <span asp-validation-for="CourseId" class="text-danger"></span>
+    </div>
+    <div class="col-12">
+        <label asp-for="Prompt" class="form-label"></label>
+        <textarea asp-for="Prompt" class="form-control"></textarea>
+        <span asp-validation-for="Prompt" class="text-danger"></span>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="CorrectAnswer" class="form-label"></label>
+        <input asp-for="CorrectAnswer" class="form-control" />
+        <span asp-validation-for="CorrectAnswer" class="text-danger"></span>
+    </div>
+    <div class="col-md-3">
+        <label asp-for="MaxPoints" class="form-label"></label>
+        <input asp-for="MaxPoints" class="form-control" />
+        <span asp-validation-for="MaxPoints" class="text-danger"></span>
+    </div>
+    <div class="col-md-3">
+        <label asp-for="MaxAttempts" class="form-label"></label>
+        <input asp-for="MaxAttempts" class="form-control" />
+        <span asp-validation-for="MaxAttempts" class="text-danger"></span>
+    </div>
+    <div class="col-md-12">
+        <label class="form-label">Tags</label>
+        <select asp-for="SelectedTagIds" asp-items="tags" class="form-select" multiple></select>
+    </div>
+    <div class="col-md-12 form-check ms-2">
+        <input asp-for="IsPublished" class="form-check-input" />
+        <label asp-for="IsPublished" class="form-check-label">Published</label>
+    </div>
+    <div class="col-12">
+        <button class="btn btn-primary">Save</button>
+        <a asp-action="Index" class="btn btn-secondary">Back</a>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

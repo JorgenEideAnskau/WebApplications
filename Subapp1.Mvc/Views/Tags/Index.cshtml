@@ -1,0 +1,30 @@
+@model IReadOnlyList<Subapp1.Mvc.Entities.Tag>
+@{
+    ViewData["Title"] = "Tags";
+}
+
+<div class="d-flex justify-content-between align-items-center mt-4">
+    <h2>Tags</h2>
+    <a class="btn btn-primary" asp-action="Edit">New Tag</a>
+</div>
+
+<table class="table table-striped mt-3">
+    <thead>
+    <tr><th>Name</th><th></th></tr>
+    </thead>
+    <tbody>
+    @foreach (var tag in Model)
+    {
+        <tr>
+            <td>@tag.Name</td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@tag.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                <form asp-action="Delete" method="post" class="d-inline">
+                    <input type="hidden" name="id" value="@tag.Id" />
+                    <button class="btn btn-sm btn-outline-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

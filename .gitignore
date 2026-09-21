@@ -1,0 +1,4 @@
+**/bin/
+**/obj/
+Subapp2.Spa/node_modules/
+Subapp2.Spa/dist/
