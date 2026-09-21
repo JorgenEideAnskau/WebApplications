@@ -25,6 +25,7 @@ public class CoursesController : ControllerBase
         return Ok(items.Select(c => new CourseDto(c.Id, c.Code, c.Title)).ToList());
     }
 
+    [ValidateAntiForgeryToken]
     [HttpPost]
     public async Task<ActionResult<CourseDto>> Create(CourseUpsertDto dto)
     {
@@ -32,6 +33,7 @@ public class CoursesController : ControllerBase
         return CreatedAtAction(nameof(GetAll), new { id = entity.Id }, new CourseDto(entity.Id, entity.Code, entity.Title));
     }
 
+    [ValidateAntiForgeryToken]
     [HttpPut("{id:int}")]
     public async Task<IActionResult> Update(int id, CourseUpsertDto dto)
     {
@@ -47,6 +49,7 @@ public class CoursesController : ControllerBase
         return NoContent();
     }
 
+    [ValidateAntiForgeryToken]
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(int id)
     {

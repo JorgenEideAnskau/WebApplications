@@ -5,6 +5,12 @@ using Subapp2.Api.Entities;
 
 namespace Subapp2.Api.Services;
 
+public static class LogSanitizer
+{
+    public static string Clean(string? value)
+        => (value ?? string.Empty).Replace("\r", string.Empty).Replace("\n", string.Empty);
+}
+
 public class SubmissionService
 {
     private readonly AppDbContext _dbContext;
@@ -30,7 +36,7 @@ public class SubmissionService
 
         if (attempts >= challenge.MaxAttempts)
         {
-            _logger.LogWarning("Submission rejected for student {StudentName} due to max attempts", dto.StudentName);
+            _logger.LogWarning("Submission rejected for student {StudentName} due to max attempts", LogSanitizer.Clean(dto.StudentName));
             return new SubmissionResponseDto(false, false, 0, "Maximum attempts reached.");
         }
 

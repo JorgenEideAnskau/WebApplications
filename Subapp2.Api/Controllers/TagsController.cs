@@ -25,6 +25,7 @@ public class TagsController : ControllerBase
         return Ok(items.Select(t => new TagDto(t.Id, t.Name)).ToList());
     }
 
+    [ValidateAntiForgeryToken]
     [HttpPost]
     public async Task<ActionResult<TagDto>> Create(TagUpsertDto dto)
     {
@@ -32,6 +33,7 @@ public class TagsController : ControllerBase
         return CreatedAtAction(nameof(GetAll), new { id = entity.Id }, new TagDto(entity.Id, entity.Name));
     }
 
+    [ValidateAntiForgeryToken]
     [HttpPut("{id:int}")]
     public async Task<IActionResult> Update(int id, TagUpsertDto dto)
     {
@@ -46,6 +48,7 @@ public class TagsController : ControllerBase
         return NoContent();
     }
 
+    [ValidateAntiForgeryToken]
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(int id)
     {

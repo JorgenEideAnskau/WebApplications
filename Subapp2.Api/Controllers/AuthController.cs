@@ -1,6 +1,8 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.AspNetCore.Antiforgery;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Subapp2.Api.Dtos;
@@ -12,7 +14,22 @@ namespace Subapp2.Api.Controllers;
 public class AuthController : ControllerBase
 {
     private const string Secret = "ThisIsOnlyForCourseDemoAndMustBeLongEnough123!";
+    private readonly IAntiforgery _antiforgery;
 
+    public AuthController(IAntiforgery antiforgery)
+    {
+        _antiforgery = antiforgery;
+    }
+
+    [AllowAnonymous]
+    [HttpGet("csrf-token")]
+    public ActionResult<object> GetCsrfToken()
+    {
+        var tokens = _antiforgery.GetAndStoreTokens(HttpContext);
+        return Ok(new { token = tokens.RequestToken });
+    }
+
+    [ValidateAntiForgeryToken]
     [HttpPost("login")]
     public ActionResult<LoginResponseDto> Login(LoginRequestDto dto)
     {

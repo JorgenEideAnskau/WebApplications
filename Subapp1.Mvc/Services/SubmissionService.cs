@@ -30,7 +30,7 @@ public class SubmissionService : ISubmissionService
 
         if (attempts >= challenge.MaxAttempts)
         {
-            _logger.LogInformation("Rejected submission for challenge {ChallengeId}: max attempts reached by {StudentName}", challengeId, studentName);
+            _logger.LogInformation("Rejected submission for challenge {ChallengeId}: max attempts reached by {StudentName}", challengeId, LogSanitizer.Clean(studentName));
             return new SubmissionResult(false, false, 0, "Maximum attempts reached for this challenge.");
         }
 
@@ -52,7 +52,7 @@ public class SubmissionService : ISubmissionService
         _dbContext.Submissions.Add(submission);
         await _dbContext.SaveChangesAsync(cancellationToken);
 
-        _logger.LogInformation("Submission stored for challenge {ChallengeId} by {StudentName} with {Points} points", challengeId, studentName, submission.AwardedPoints);
+        _logger.LogInformation("Submission stored for challenge {ChallengeId} by {StudentName} with {Points} points", challengeId, LogSanitizer.Clean(studentName), submission.AwardedPoints);
 
         return isCorrect
             ? new SubmissionResult(true, true, submission.AwardedPoints, "Correct answer. Great work!")

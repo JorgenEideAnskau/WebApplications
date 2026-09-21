@@ -9,6 +9,7 @@ using Subapp2.Api.Repositories;
 namespace Subapp2.Api.Controllers;
 
 [ApiController]
+[IgnoreAntiforgeryToken]
 [Authorize]
 [Route("api/[controller]")]
 public class ChallengesController : ControllerBase

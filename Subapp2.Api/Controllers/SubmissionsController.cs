@@ -6,6 +6,7 @@ using Subapp2.Api.Services;
 namespace Subapp2.Api.Controllers;
 
 [ApiController]
+[IgnoreAntiforgeryToken]
 [Authorize]
 [Route("api/[controller]")]
 public class SubmissionsController : ControllerBase

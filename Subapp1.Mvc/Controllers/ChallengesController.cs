@@ -6,6 +6,7 @@ using Subapp1.Mvc.Data;
 using Subapp1.Mvc.Entities;
 using Subapp1.Mvc.Repositories;
 using Subapp1.Mvc.ViewModels;
+using Subapp1.Mvc.Services;
 
 namespace Subapp1.Mvc.Controllers;
 
@@ -107,7 +108,7 @@ public class ChallengesController : Controller
         }
 
         await _dbContext.SaveChangesAsync();
-        _logger.LogInformation("Challenge {ChallengeTitle} saved", challenge.Title);
+        _logger.LogInformation("Challenge {ChallengeTitle} saved", LogSanitizer.Clean(challenge.Title));
 
         return RedirectToAction(nameof(Index));
     }
